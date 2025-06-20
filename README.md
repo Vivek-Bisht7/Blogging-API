@@ -1,1 +1,3 @@
-# Blogging-API
+# BLOGGING-API Project
+
+KEY FEATURES
