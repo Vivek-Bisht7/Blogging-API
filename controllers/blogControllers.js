@@ -34,4 +34,62 @@ const getAllBlogs = async (req , res) => {
     }
 }
 
-module.exports = {createBlog , getAllBlogs}
+const getBlog = async (req,res) => {
+    try{
+        const {id} = req.params;
+        const blog = await Blog.findById(id); 
+
+        if(!blog){
+            return res.status(404).json({
+                success:false,
+                message : "Blog not found with this id"
+            })
+        }
+
+        console.log("Blog successfully found!!");
+        res.status(200).json({
+            success:true,
+            message:"Blog found successfully",
+            blog
+        });
+    }
+    catch(error){
+        console.log("Failed to find blog");
+        res.status(500).json({
+            success:false,
+            message:"Blog not found" ,
+            error : error.message
+        });
+    }
+}
+
+const deleteBlog = async (req,res) => {
+    try{
+        const {id} = req.params;
+        const deletedBlog = await Blog.findByIdAndDelete(id); 
+
+        if(!deletedBlog){
+            return res.status(404).json({
+                success:false,
+                message : "Failed to delete blog with this id"
+            })
+        }
+
+        console.log("Blog successfully deleted!!");
+        res.status(200).json({
+            success:true,
+            message:"Blog deleted successfully",
+            deletedBlog
+        });
+    }
+    catch(error){
+        console.log("Failed to delete blog");
+        res.status(500).json({
+            success:false,
+            message:"Blog not deleted" ,
+            error : error.message
+        });
+    }
+}
+
+module.exports = {createBlog , getAllBlogs , getBlog , deleteBlog};
