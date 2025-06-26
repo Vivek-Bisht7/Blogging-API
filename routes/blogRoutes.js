@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {createBlog , getAllBlogs} = require('../controllers/blogControllers');
+const {createBlog , getAllBlogs , getBlog , deleteBlog} = require('../controllers/blogControllers');
 
 router.get('/blogs' , getAllBlogs);
 router.get('/blogs/:id' , getBlog);
