@@ -92,4 +92,39 @@ const deleteBlog = async (req,res) => {
     }
 }
 
-module.exports = {createBlog , getAllBlogs , getBlog , deleteBlog};
+const updateBlog = async (req,res) => {
+    try{
+        const {id} = req.params;
+        const updatedData = req.body;
+
+        const updatedBlog = await Blog.findByIdAndUpdate(id , updatedData , {
+            new : true,
+            runValidators : true
+        });
+
+        if(!updatedBlog){
+            return res.status(404).json({
+                success:false,
+                message:"User not found with this ID"
+            });
+        }
+
+        console.log("Blog updated successfully");
+        res.status(200).json({
+            success:true,
+            message:"Blog updated successfully",
+            updatedBlog
+        })
+
+    }
+    catch(error){
+        console.log("Failed to update information");
+        res.status(500).json({
+            success:false,
+            message:"Failed to update blog",
+            error : error.message
+        })
+    }
+}
+
+module.exports = {createBlog , getAllBlogs , getBlog , deleteBlog ,updateBlog};
